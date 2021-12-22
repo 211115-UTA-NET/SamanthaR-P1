@@ -65,10 +65,10 @@ namespace P0Store
 
         public Customer(string firstName, string lastName, string city, string state)
         {
-            this.FirstName = firstName;
-            this.LastName = lastName;
-            this.City = city;
-            this.State = state;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.city = city;
+            this.state = state;
         }
 
         //Method

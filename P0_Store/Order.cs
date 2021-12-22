@@ -46,7 +46,7 @@ namespace P0Store
         }
 
         //Constructor 
-        public Order(Store storelocation, Customer customerName)
+        public Order(Store storeLocation, Customer customerName)
         {
             this.item = customerName.Cart;
             this.storeLocation = storeLocation;

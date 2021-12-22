@@ -459,11 +459,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\roder\\Revature\\SamanthaRoderick\\P0_Store\\P0_Store.csproj",
+      "projectUniqueName": "C:\\Users\\roder\\Revature\\SamanthaR-P0\\P0_Store\\P0_Store.csproj",
       "projectName": "P0_Store",
-      "projectPath": "C:\\Users\\roder\\Revature\\SamanthaRoderick\\P0_Store\\P0_Store.csproj",
+      "projectPath": "C:\\Users\\roder\\Revature\\SamanthaR-P0\\P0_Store\\P0_Store.csproj",
       "packagesPath": "C:\\Users\\roder\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\roder\\Revature\\SamanthaRoderick\\P0_Store\\obj\\",
+      "outputPath": "C:\\Users\\roder\\Revature\\SamanthaR-P0\\P0_Store\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\roder\\AppData\\Roaming\\NuGet\\NuGet.Config",

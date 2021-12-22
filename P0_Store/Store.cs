@@ -38,8 +38,8 @@ namespace P0Store
         //Constructor
         public Store(int storeID, string storeLocation)
         {
-            this.StoreID = storeID;
-            this.StoreLocation = storeLocation;
+            this.storeID = storeID;
+            this.storeLocation = storeLocation;
         }
         
         //Method

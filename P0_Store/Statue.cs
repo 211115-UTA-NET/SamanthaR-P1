@@ -36,9 +36,9 @@ namespace P0Store
         //Constructor
         public Statue(int itemID, string style, decimal price)
         {
-            this.ItemID = itemID;
-            this.Style = style;
-            this.Price = price;
+            this.itemID = itemID;
+            this.style = style;
+            this.price = price;
         }
     }
 }
