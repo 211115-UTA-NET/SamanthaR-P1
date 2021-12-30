@@ -25,7 +25,7 @@ namespace P0Store
             string response;
             bool verifyCustomer = false;
 
-            WriteLine("Welcome to the Garden Ceramics Store for Misfit Toys!");
+            WriteLine("\n\nWelcome to the Garden Ceramics Store for Misfit Toys!\n");
         do{
             WriteLine("Are you a new customer? y/n?");
             response = ReadLine();
@@ -45,9 +45,11 @@ namespace P0Store
                 string shippingState = ReadLine();
             
                 connection.Open();
-                string commandText1 = $"INSERT INTO Garden_Customer (Customer_First_Name, Customer_Last_Name, Shipping_Address, Shipping_City, Shipping_State) VALUES ('{firstName}', '{lastName}', '{shippingAddress}', '{shippingCity}', '{shippingState}');";
-                using SqlCommand command1 = new(commandText1, connection);
-                connection.Close();
+                string newUser = $"INSERT INTO Garden_Customer (Customer_First_Name, Customer_Last_Name, Shipping_Address, Shipping_City, Shipping_State) VALUES ('{firstName}', '{lastName}', '{shippingAddress}', '{shippingCity}', '{shippingState}');";
+                using SqlCommand newUserCommand = new(newUser, connection);
+                using SqlDataReader reader1 = newUserCommand.ExecuteReader();
+                
+                //                 connection.Close();
                 WriteLine($"It's nice to meet you, {firstName} {lastName}!");
                 verifyCustomer = true;
                 break; 
@@ -60,24 +62,27 @@ namespace P0Store
                 string lastName = ReadLine();
                 WriteLine("What is your city?");
                 string shippingCity = ReadLine();
-                connection.Open();
-                string commandText2 = $"SELECT * FROM Garden_Customer WHERE Customer_First_Name = '{firstName}' AND Customer_Last_Name = '{lastName}' AND Shipping_City = '{shippingCity}';";
-                WriteLine("Printing search results... \n-----------------------------------------");
-                using SqlCommand command5 = new(commandText2, connection);
-                using SqlDataReader reader2 = command5.ExecuteReader();
+                                 connection.Open();
+                string findUser = $"SELECT * FROM Garden_Customer WHERE Customer_First_Name = '{firstName}' AND Customer_Last_Name = '{lastName}' AND Shipping_City = '{shippingCity}';";
+                WriteLine("\nPrinting search results... \n\n-----------------------------------------------------------------------------");
+                using SqlCommand findUserCommand = new(findUser, connection);
+                using SqlDataReader reader2 = findUserCommand.ExecuteReader();
                 reader2.Read();
-                connection.Close();
-                WriteLine("----------------------------------------- \nDid we find you? y/n");
+                Write(reader2.GetString(1)+" "+reader2.GetString(2)+", "+reader2.GetString(3)+", "+reader2.GetString(4)+", "+reader2.GetString(5));
+                //                          connection.Close();
+                WriteLine("\n----------------------------------------------------------------------------- \n\nIs this you? y/n");
                 string verifyCorrect = ReadLine();
                 yesno = verifyCorrect.ToLower();
                 if (yesno == "y")
+                {
+                        WriteLine($"Welcome back, {firstName}!");
                         verifyCustomer = true;
+                }
                 else
                         WriteLine("You are a new customer. We will need to add you to our database.");
                 }
         }while(!verifyCustomer);
-            //while(verifyCustomer == false);
-            
+                        
             WriteLine("\nWhat store are you making your order from today? \nPlease select from the following:\nFor Seattle, enter 1 \nFor Portland, enter 2 \nFor Sacramento, enter 3");
             
             while(storeChoice != null)
@@ -100,17 +105,14 @@ namespace P0Store
             }
             
 
-            // do {
-            //     WriteLine("");
-            // }while();
             
-            using SqlConnection connection3 = new(connnectionString); 
-            connection3.Open();
+            
+           
             string commandText = "SELECT * FROM Statue;";
             
             //then insert those variables into the appropriate information by columns of the customer table
  
-            using SqlCommand command2 = new(commandText, connection3);
+            using SqlCommand command2 = new(commandText, connection);
             //take this command and put it through this connection
 
             using SqlDataReader reader = command2.ExecuteReader();
@@ -143,19 +145,9 @@ namespace P0Store
             /* connection.Open;
             
             
-            
-            
-            
-            
-            
-            
-            
             Order thisOrder = new()
             string commandText = "SELECT  FROM ;";
 
-            
-            
-            
             */
            
 }}}
