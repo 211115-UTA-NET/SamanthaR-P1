@@ -59,23 +59,31 @@ namespace P0Store
                     WriteLine("What is your city?");
                     string shippingCity = ReadLine();
                     connection.Open();
-                    string findUser = $"SELECT * FROM Garden_Customer WHERE Customer_First_Name = '{firstName}' AND Customer_Last_Name = '{lastName}' AND Shipping_City = '{shippingCity}';";
-                    WriteLine("\nPrinting search results... \n\n-----------------------------------------------------------------------------");
-                    using SqlCommand findUserCommand = new(findUser, connection);
-                    using SqlDataReader reader2 = findUserCommand.ExecuteReader();
-                    reader2.Read();
-                    Write(reader2.GetString(1) + " " + reader2.GetString(2) + ", " + reader2.GetString(3) + ", " + reader2.GetString(4) + ", " + reader2.GetString(5));
-                    //                          connection.Close();
-                    WriteLine("\n----------------------------------------------------------------------------- \n\nIs this you? y/n");
-                    string verifyCorrect = ReadLine();
-                    yesno = verifyCorrect.ToLower();
-                    if (yesno == "y")
+                    try
                     {
-                        WriteLine($"Welcome back, {firstName}!");
-                        verifyCustomer = true;
+                        string findUser = $"SELECT * FROM Garden_Customer WHERE Customer_First_Name = '{firstName}' AND Customer_Last_Name = '{lastName}' AND Shipping_City = '{shippingCity}';";
+                        WriteLine("\nPrinting search results... \n\n-----------------------------------------------------------------------------");
+                        using SqlCommand findUserCommand = new(findUser, connection);
+                        using SqlDataReader reader2 = findUserCommand.ExecuteReader();
+                        reader2.Read();
+                        Write(reader2.GetString(1) + " " + reader2.GetString(2) + ", " + reader2.GetString(3) + ", " + reader2.GetString(4) + ", " + reader2.GetString(5));
+                        //                          connection.Close();
+                        WriteLine("\n----------------------------------------------------------------------------- \n\nIs this you? y/n");
+
+
+
+                        string verifyCorrect = ReadLine();
+                        yesno = verifyCorrect.ToLower();
+                        if (yesno == "y")
+                        {
+                            WriteLine($"Welcome back, {firstName}!");
+                            verifyCustomer = true;
+                        }
                     }
-                    else
-                        WriteLine("You are a new customer. We will need to add you to our database.");
+                    catch (InvalidOperationException)
+                    {
+                        WriteLine("We could not find you in our database. Please verify that your information is correct.");
+                    }
                 }
             } while (!verifyCustomer);
 
@@ -86,19 +94,21 @@ namespace P0Store
                 try
                 {
                     storeChoice = Convert.ToInt32(ReadLine());
-                    WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
-                    break;
+                    
                 }
+
                 catch (IndexOutOfRangeException)
                 {
                     WriteLine("Error: Options are from 1 to 3 \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
-                    continue;
+                    return;
+
                 }
                 catch (FormatException)
                 {
                     WriteLine("Error: you did not enter a number. \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
-                    continue;
+                    return;
                 }
+                WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
             }
 
 
