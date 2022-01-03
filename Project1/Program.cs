@@ -14,7 +14,8 @@ namespace P0Store
             //Fields
 
             int userStatueSelection;
-            int userDesiredQty;
+            int userDesiredQuantity = 0;
+            int[] allowedQuantity = {1, 2, 3 , 4, 5, 6, 7, 8, 9, 10};
             string[] stores = { "Seattle", "Portland", "Sacramento" };
             int storeChoice = 0;
             string response;
@@ -82,7 +83,7 @@ namespace P0Store
                     }
                     catch (InvalidOperationException)
                     {
-                        WriteLine("We could not find you in our database. Please verify that your information is correct.");
+                        WriteLine("\nWe could not find you in our database. Please verify that your information is correct.\n");
                     }
                 }
             } while (!verifyCustomer);
@@ -94,21 +95,19 @@ namespace P0Store
                 try
                 {
                     storeChoice = Convert.ToInt32(ReadLine());
-                    
+                    WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
+                    break;
                 }
-
                 catch (IndexOutOfRangeException)
                 {
                     WriteLine("Error: Options are from 1 to 3 \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
-                    return;
-
+                    continue;
                 }
                 catch (FormatException)
                 {
                     WriteLine("Error: you did not enter a number. \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
-                    return;
+                    continue;
                 }
-                WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
             }
 
 
@@ -141,7 +140,33 @@ namespace P0Store
             //decimal total = 0;
             userStatueSelection = Convert.ToInt32(ReadLine());
             int itemID = userStatueSelection;
-            WriteLine($"You selected {itemID}. How many would you like to order?");
+            
+            WriteLine($"You selected {itemID}. How many would you like to order? (Order quantity must not exceed 10.");
+            while (userDesiredQuantity != null)
+            {
+                try
+                {
+                    userDesiredQuantity = Convert.ToInt32(ReadLine());
+                    WriteLine($"You would like to purchase {allowedQuantity[userDesiredQuantity - 1]}.");
+                    break;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    WriteLine("Error: Quantity must not be less than 1, or more than 10.)");
+                    continue;
+                }
+                catch (FormatException)
+                {
+                    WriteLine("Error: you did not enter a number. \nPlease enter a number 1 - 10 as your desired quantity.");
+                    continue;
+                }
+                catch(ArgumentNullException)
+                {
+                    WriteLine("Please enter a valid quantity as a number value.");
+                    continue;
+                }
+            }
+
             connection.Close();
             //use a do-while loop -- so they can continue to shop if they want more items
             //have a readline for the user's desired option and quantity
