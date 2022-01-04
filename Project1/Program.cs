@@ -20,6 +20,10 @@ namespace P0Store
             int storeChoice = 0;
             string response;
             bool verifyCustomer = false;
+            bool keepShopping = false;
+            string? toContinue = "";
+            string statueStyle = "";
+            int[] statueMenuOptions = { 1, 2, 3, 4, 5};
 
             WriteLine("\n\nWelcome to the Garden Ceramics Store for Misfit Toys!\n");
             do
@@ -87,89 +91,116 @@ namespace P0Store
                     }
                 }
             } while (!verifyCustomer);
-
-            WriteLine("\nWhat store are you making your order from today? \nPlease select from the following:\nFor Seattle, enter 1 \nFor Portland, enter 2 \nFor Sacramento, enter 3");
-
-            while (storeChoice != null)
-            {
-                try
-                {
-                    storeChoice = Convert.ToInt32(ReadLine());
-                    WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
-                    break;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    WriteLine("Error: Options are from 1 to 3 \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
-                    continue;
-                }
-                catch (FormatException)
-                {
-                    WriteLine("Error: you did not enter a number. \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
-                    continue;
-                }
-            }
-
-
-
-
-
-            string commandText = "SELECT * FROM Statue;";
-
-            //then insert those variables into the appropriate information by columns of the customer table
-
-            using SqlCommand command2 = new(commandText, connection);
-            //take this command and put it through this connection
-
-            using SqlDataReader reader = command2.ExecuteReader();
-
-            while (reader.Read()) //reads one row at a time, getting one value for each column, indexes at [0], you must know the type and the value that will come out of the database
-            {
-
-                int item_ID = reader.GetInt32(0);
-
-                string style = reader.GetString(1);
-
-                decimal price = reader.GetDecimal(2);
-
-                Console.WriteLine($"Enter {item_ID} to select '{style}' for ${price}");
-            }
-
-
-
-            //decimal total = 0;
-            userStatueSelection = Convert.ToInt32(ReadLine());
-            int itemID = userStatueSelection;
             
-            WriteLine($"You selected {itemID}. How many would you like to order? (Order quantity must not exceed 10.");
-            while (userDesiredQuantity != null)
-            {
-                try
+            
+                WriteLine("\nWhat store are you making your order from today? \nPlease select from the following:\nFor Seattle, enter 1 \nFor Portland, enter 2 \nFor Sacramento, enter 3");
+            
+                
+                while (storeChoice != null)
                 {
-                    userDesiredQuantity = Convert.ToInt32(ReadLine());
-                    WriteLine($"You would like to purchase {allowedQuantity[userDesiredQuantity - 1]}.");
-                    break;
+                    try
+                    {
+                        storeChoice = Convert.ToInt32(ReadLine());
+                        WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
+                        break;
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        WriteLine("Error: Options are from 1 to 3 \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
+                        continue;
+                    }
+                    catch (FormatException)
+                    {
+                        WriteLine("Error: you did not enter a number. \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
+                        continue;
+                    }
                 }
-                catch (IndexOutOfRangeException)
-                {
-                    WriteLine("Error: Quantity must not be less than 1, or more than 10.)");
-                    continue;
-                }
-                catch (FormatException)
-                {
-                    WriteLine("Error: you did not enter a number. \nPlease enter a number 1 - 10 as your desired quantity.");
-                    continue;
-                }
-                catch(ArgumentNullException)
-                {
-                    WriteLine("Please enter a valid quantity as a number value.");
-                    continue;
-                }
-            }
 
+
+
+            do
+            {
+                int item_ID;
+                string style = "";
+                decimal price;
+                string commandText = "SELECT * FROM Statue;";
+
+                //then insert those variables into the appropriate information by columns of the customer table
+
+                using SqlCommand command2 = new(commandText, connection);
+                //take this command and put it through this connection
+
+                using SqlDataReader reader = command2.ExecuteReader();
+
+                while (reader.Read()) //reads one row at a time, getting one value for each column, indexes at [0], you must know the type and the value that will come out of the database
+                {
+
+                    item_ID = reader.GetInt32(0);
+
+                    style = reader.GetString(1);
+
+                    price = reader.GetDecimal(2);
+
+                    Console.WriteLine($"Enter {item_ID} to select '{style}' for ${price}");
+                }
+
+                do
+                {
+                    userStatueSelection = Convert.ToInt32(ReadLine());
+                    //decimal total = 0;
+                    try
+                    {
+                        WriteLine($"You have chosen {statueMenuOptions[userStatueSelection - 1]}");
+                        break;
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        WriteLine("That is not a valid choice. Please make a selection from 1 to 5.");
+                        continue;
+                    }
+                }while(userStatueSelection != null);
+                WriteLine($"How many would you like to order? (Order quantity must not exceed 10.");
+                while (userDesiredQuantity != null)
+                {
+                    try
+                    {
+                        userDesiredQuantity = Convert.ToInt32(ReadLine());
+                        WriteLine($"You would like to purchase {allowedQuantity[userDesiredQuantity - 1]}.");
+                        break;
+                    }
+                    catch (IndexOutOfRangeException)
+                    {
+                        WriteLine("Error: Quantity must not be less than 1, or more than 10.\nHow many would you like to order?)");
+                        continue;
+                    }
+                    catch (FormatException)
+                    {
+                        WriteLine("Error: you did not enter a number. \nPlease enter a number 1 - 10 as your desired quantity.");
+                        continue;
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        WriteLine("Please enter a valid quantity as a number value.");
+                        continue;
+                    }
+                }
+                WriteLine("Would you like to continue shopping? y/n");
+                toContinue = Console.ReadLine();
+                toContinue = toContinue.Trim();
+                toContinue = toContinue.ToLower();
+                if (toContinue == "y" || toContinue == "yes")
+                {
+                    keepShopping = true;
+                }
+                else
+                {
+                    keepShopping = false;
+                }
+                
+            } while (keepShopping = true);
             connection.Close();
-            //use a do-while loop -- so they can continue to shop if they want more items
-            //have a readline for the user's desired option and quantity
+            //use a do-while loop -- so they can continue to shop if they want more itemsXXXXXXXXXX
+            //have a readline for the user's desired option and quantityXXXXXXXXXXXXXXX
             //want to take in a user option and quantity and create a statement that can 1. connection.open(), 2. reduce the inventory at the selected store by their quantity choice, 3. connection.close() 
             //total += qty*price
             //} (while the user's input != 1,2,3,4,or5)
