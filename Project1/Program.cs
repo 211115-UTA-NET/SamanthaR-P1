@@ -13,7 +13,7 @@ namespace P0Store
             using SqlConnection connection = new(connnectionString);
             //Fields
 
-            int userStatueSelection;
+            int userStatueSelection = 0;
             int userDesiredQuantity = 0;
             int[] allowedQuantity = {1, 2, 3 , 4, 5, 6, 7, 8, 9, 10};
             string[] stores = { "Seattle", "Portland", "Sacramento" };
@@ -24,7 +24,7 @@ namespace P0Store
             string? toContinue = "";
             string statueStyle = "";
             int[] statueMenuOptions = { 1, 2, 3, 4, 5};
-            int storeID = 0;
+            int storeID;
             string modifyInventoryCommand = "";
 
             WriteLine("\n\nWelcome to the Garden Ceramics Store for Misfit Toys!\n");
@@ -96,42 +96,45 @@ namespace P0Store
             
             
                 WriteLine("\nWhat store are you making your order from today? \nPlease select from the following:\nFor Seattle, enter 1 \nFor Portland, enter 2 \nFor Sacramento, enter 3");
-            
-                
-                while (storeChoice != null)
-                {
-                    try
-                    {
-                        storeChoice = Convert.ToInt32(ReadLine());
-                        WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
-                    if (storeChoice == 1)
-                    {
-                        storeID = 80;
-                    }
-                    else if (storeChoice == 2)
-                    {
-                        storeID = 81;
-                    }
-                    else if (storeChoice == 3)
-                    {
-                        storeID = 82;
-                    }
-                    break;
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        WriteLine("Error: Options are from 1 to 3 \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
-                        continue;
-                    }
-                    catch (FormatException)
-                    {
-                        WriteLine("Error: you did not enter a number. \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
-                        continue;
-                    }
-                }
-           
-         
 
+            connection.Close();
+            do
+            {
+                storeChoice = Convert.ToInt32(ReadLine());
+                if (storeChoice == 1)
+                {
+                    storeID = 80;
+                }
+                else if (storeChoice == 2)
+                {
+                    storeID = 81;
+                }
+                else if (storeChoice == 3)
+                {
+                    storeID = 82;
+                }
+                else
+                {
+                    storeID = 0;
+                }
+                try
+                {
+                    WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
+                    break;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    WriteLine("Error: Options are from 1 to 3 \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
+                    continue;
+                }
+                catch (FormatException)
+                {
+                    WriteLine("Error: you did not enter a number. \nPlease enter 1 for Seattle, 2 for Portland, or 3 for Sacramento.");
+                    continue;
+                }
+            }
+            while (storeChoice != 0);
+            connection.Open();
             do
             {
                 int item_ID;
@@ -157,7 +160,7 @@ namespace P0Store
 
                     Console.WriteLine($"Enter {item_ID} to select '{style}' for ${price}");
                 }
-
+                connection.Close();
                 do
                 {
                     userStatueSelection = Convert.ToInt32(ReadLine());
@@ -172,7 +175,7 @@ namespace P0Store
                         WriteLine("That is not a valid choice. Please make a selection from 1 to 5.");
                         continue;
                     }
-                }while(userStatueSelection != null);
+                }while(userStatueSelection != 0);
                 WriteLine($"How many would you like to order? (Order quantity must not exceed 10.");
                 while (userDesiredQuantity != null)
                 {
@@ -180,7 +183,7 @@ namespace P0Store
                     {
                         userDesiredQuantity = Convert.ToInt32(ReadLine());
                         WriteLine($"You would like to purchase {allowedQuantity[userDesiredQuantity - 1]}.");
-                        modifyInventoryCommand = $"UPDATE Statue_Store_Inventory SET 'Qty' = 'Qty' - {userDesiredQuantity} WHERE 'Store_ID' = {storeID} AND 'Item_ID' = {userStatueSelection}";
+                        
                         break;
                     }
                     catch (IndexOutOfRangeException)
@@ -199,6 +202,10 @@ namespace P0Store
                         continue;
                     }
                 }
+                connection.Open();
+                modifyInventoryCommand = $"UPDATE Statue_Store_Inventory SET Qty = Qty - {userDesiredQuantity} WHERE Store_ID = {storeID} AND Item_ID = {userStatueSelection}";
+                using SqlCommand command3 = new(modifyInventoryCommand, connection);
+                using SqlDataReader reader2 = command3.ExecuteReader();
                 WriteLine("Would you like to continue shopping? y/n");
                 toContinue = Console.ReadLine();
                 toContinue = toContinue.Trim();
@@ -214,6 +221,8 @@ namespace P0Store
                 
             } while (keepShopping == true);
             connection.Close();
+
+            WriteLine($"StoreID is {storeID}");
             //use a do-while loop -- so they can continue to shop if they want more itemsXXXXXXXXXX
             //have a readline for the user's desired option and quantityXXXXXXXXXXXXXXX
             //want to take in a user option and quantity and create a statement that can 1. connection.open(), 2. reduce the inventory at the selected store by their quantity choice, 3. connection.close() 
