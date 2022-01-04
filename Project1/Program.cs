@@ -24,7 +24,8 @@ namespace P0Store
             string? toContinue = "";
             string statueStyle = "";
             int[] statueMenuOptions = { 1, 2, 3, 4, 5};
-            int storeID;
+            int storeID = 0;
+            string modifyInventoryCommand = "";
 
             WriteLine("\n\nWelcome to the Garden Ceramics Store for Misfit Toys!\n");
             do
@@ -103,7 +104,19 @@ namespace P0Store
                     {
                         storeChoice = Convert.ToInt32(ReadLine());
                         WriteLine($"You have selected {stores[storeChoice - 1]}. Excellent choice!");
-                        break;
+                    if (storeChoice == 1)
+                    {
+                        storeID = 80;
+                    }
+                    else if (storeChoice == 2)
+                    {
+                        storeID = 81;
+                    }
+                    else if (storeChoice == 3)
+                    {
+                        storeID = 82;
+                    }
+                    break;
                     }
                     catch (IndexOutOfRangeException)
                     {
@@ -116,19 +129,8 @@ namespace P0Store
                         continue;
                     }
                 }
-
-            if (storeChoice == 1)
-            {
-                storeID = 80;
-            }
-            else if (storeChoice == 2) 
-            {
-                storeID = 81;    
-            }
-            else if (storeChoice == 3)
-            {
-                storeID = 82;
-            }
+           
+         
 
             do
             {
@@ -178,6 +180,7 @@ namespace P0Store
                     {
                         userDesiredQuantity = Convert.ToInt32(ReadLine());
                         WriteLine($"You would like to purchase {allowedQuantity[userDesiredQuantity - 1]}.");
+                        modifyInventoryCommand = $"UPDATE Statue_Store_Inventory SET 'Qty' = 'Qty' - {userDesiredQuantity} WHERE 'Store_ID' = {storeID} AND 'Item_ID' = {userStatueSelection}";
                         break;
                     }
                     catch (IndexOutOfRangeException)
@@ -209,7 +212,7 @@ namespace P0Store
                     keepShopping = false;
                 }
                 
-            } while (keepShopping = true);
+            } while (keepShopping == true);
             connection.Close();
             //use a do-while loop -- so they can continue to shop if they want more itemsXXXXXXXXXX
             //have a readline for the user's desired option and quantityXXXXXXXXXXXXXXX
