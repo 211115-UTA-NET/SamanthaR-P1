@@ -24,6 +24,7 @@ namespace P0Store
             string? toContinue = "";
             string statueStyle = "";
             int[] statueMenuOptions = { 1, 2, 3, 4, 5};
+            int storeID;
 
             WriteLine("\n\nWelcome to the Garden Ceramics Store for Misfit Toys!\n");
             do
@@ -116,7 +117,18 @@ namespace P0Store
                     }
                 }
 
-
+            if (storeChoice == 1)
+            {
+                storeID = 80;
+            }
+            else if (storeChoice == 2) 
+            {
+                storeID = 81;    
+            }
+            else if (storeChoice == 3)
+            {
+                storeID = 82;
+            }
 
             do
             {
