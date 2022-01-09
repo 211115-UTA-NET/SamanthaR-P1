@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.IO;
 using static System.Console;
 
-namespace P0Store
+namespace Project1
 {
-    class Store
+    public class Store
     {
         //Fields
         private int storeID;
@@ -17,6 +17,7 @@ namespace P0Store
         private string? storeLocation;
 
         private Dictionary<Statue, int> itemQuantity = new();
+        
         //Properties
         public int StoreID
         {

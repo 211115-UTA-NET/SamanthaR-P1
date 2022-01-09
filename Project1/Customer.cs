@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using System.IO;
 using static System.Console;
 
-namespace P0Store
+namespace Project1
 {
-    class Customer
+    public class Customer
     {
-        private string? firstName;
+        internal string? firstName;
         private string? lastName;
         private string? address;
         private string? city;

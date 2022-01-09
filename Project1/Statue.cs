@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.IO;
 using static System.Console;
 
-namespace P0Store
+namespace Project1
 {
-    class Statue
+    public class Statue
     {
         //What fields should be here?
         private int itemID;
