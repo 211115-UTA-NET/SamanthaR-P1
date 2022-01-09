@@ -13,7 +13,7 @@ namespace StoreApi.StoreApi.Sql
             List<StatueDtos> statueList = new List<StatueDtos>();
             connection.Open();
 
-            string displayMenuQuery = $"  SELECT Statue.Item_ID, Statue.Style, Statue.Price \nFROM Statue \nJOIN Statue_Store_Inventory \nON Statue.Item_ID = Statue_Store_Inventory.Item_ID \nJOIN Store \nON Statue_Store_Inventory.Store_ID = Store.Store_ID \nWHERE Store.Store_ID = 80;";
+            string displayMenuQuery = $"  SELECT Statue.Item_ID, Statue.Style, Statue.Price, Statue_Store_Inventory.Qty \nFROM Statue \nJOIN Statue_Store_Inventory \nON Statue.Item_ID = Statue_Store_Inventory.Item_ID \nJOIN Store \nON Statue_Store_Inventory.Store_ID = Store.Store_ID \nWHERE Store.Store_ID = 80;";
 
             using SqlCommand displayMenuCommand = new(displayMenuQuery, connection);
             using SqlDataReader reader = displayMenuCommand.ExecuteReader();
@@ -22,10 +22,12 @@ namespace StoreApi.StoreApi.Sql
                 int itemID = reader.GetInt32(0);
                 string style = reader.GetString(1);
                 decimal price = reader.GetDecimal(2);
+                int quantity = reader.GetInt32(3);
                 StatueDtos statueDtos = new StatueDtos();
                 statueDtos.itemID = itemID;
                 statueDtos.style = style;
                 statueDtos.price = price;
+                statueDtos.quantity = quantity;
                 statueList.Add(statueDtos);
             }
             
