@@ -9,7 +9,7 @@ using static System.Console;
 
 namespace StoreApi.Logic
 {
-    class Store
+    public class Store
     {
         //Fields
         private int storeID;
@@ -17,6 +17,7 @@ namespace StoreApi.Logic
         private string? storeLocation;
 
         private Dictionary<Statue, int> itemQuantity = new();
+
         //Properties
         public int StoreID
         {

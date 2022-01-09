@@ -25,7 +25,6 @@ namespace StoreApi.Sql
             customerDtos.address = reader.GetString(3);
             customerDtos.city = reader.GetString(4);
             customerDtos.state = reader.GetString(5);
-            //also read in the store ID
             
             connection.Close();
             

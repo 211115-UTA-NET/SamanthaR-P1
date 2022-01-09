@@ -11,14 +11,12 @@ using Prometheus;
 
 namespace StoreApi.Logic
 {
-    class Statue
+    public class Statue
     {
-        <Summary>
         private int itemID;
         private string? style;
         private decimal price;
 
-        //Properties
         public int ItemID
         {
             get { return itemID; }

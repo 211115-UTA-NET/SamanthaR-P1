@@ -9,9 +9,9 @@ using static System.Console;
 
 namespace StoreApi.Logic
 {
-    class Customer
+    public class Customer
     {
-        internal string? firstName;
+        private string? firstName;
         private string? lastName;
         private string? address;
         private string? city;
