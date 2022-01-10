@@ -15,6 +15,7 @@ namespace StoreApi.Logic
         private int itemID;
         private string? style;
         private decimal price;
+        private int quantity;
 
         public int ItemID
         {
@@ -40,12 +41,14 @@ namespace StoreApi.Logic
             this.price = price;
         }
 
-        public Statue(StatueDtos quantity, StoreDtos storeID, StatueDtos itemID)
+        public Statue(int quantity, int storeID, int itemID)
         {
             StatueDtos statueDtos = new StatueDtos();
             StoreDtos storeDtos = new StoreDtos();
             statueDtos.quantity = quantity;
-            storeDtos.storeID = storeID;
+            storeDtos.StoreID = storeID;
+            statueDtos.itemID = itemID;
+
 
         }
     }

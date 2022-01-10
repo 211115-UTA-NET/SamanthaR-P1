@@ -31,3 +31,5 @@ C:\Users\roder\Revature\SamanthaR-P1\StoreApi\obj\Debug\net6.0\StoreApi.dll
 C:\Users\roder\Revature\SamanthaR-P1\StoreApi\obj\Debug\net6.0\ref\StoreApi.dll
 C:\Users\roder\Revature\SamanthaR-P1\StoreApi\obj\Debug\net6.0\StoreApi.pdb
 C:\Users\roder\Revature\SamanthaR-P1\StoreApi\obj\Debug\net6.0\StoreApi.genruntimeconfig.cache
+C:\Users\roder\Revature\SamanthaR-P1\StoreApi\bin\Debug\net6.0\Prometheus.NetCore.dll
+C:\Users\roder\Revature\SamanthaR-P1\StoreApi\bin\Debug\net6.0\Prometheus.NetStandard.dll

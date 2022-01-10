@@ -10,11 +10,16 @@ namespace StoreApi.Controllers
     [Route("[controller]")]
     public class StoreController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<List<StoreDtos>> DisplayStoreOptions([FromQuery, Required] int storeID, [FromQuery, Required] string storeLocation)
+        private readonly IRepository _repository;
+        public StoreController(IRepository repository)
         {
-            List<StoreDtos> storeDtos = StoreOptionDisplay.ReadStoreMenu();
-            return storeDtos;
+            _repository = repository;
+        }
+        [HttpGet]
+        public async Task<List<StoreDtos>> DisplayStoreOptions()
+        {
+            IEnumerable<StoreDtos> storeDtosList = await _repository.ReadStoreMenu();
+            return storeDtosList.ToList();
         }
 
         [HttpPost]

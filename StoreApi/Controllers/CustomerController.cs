@@ -19,11 +19,11 @@ namespace StoreApi.Controllers
             return customerDtos;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddCustomer([FromQuery, Required] string firstName, [FromQuery, Required] string lastName, [FromQuery, Required] string address, [FromQuery, Required] string city, [FromQuery, Required] string state)
-        {
-            CustomerDtos customerDtos;
-            customerDtos.firstName = AddCustomer.
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> AddCustomers([FromQuery, Required] string firstName, [FromQuery, Required] string lastName, [FromQuery, Required] string address, [FromQuery, Required] string city, [FromQuery, Required] string state)
+        //{
+        //    CustomerDtos customerDtos;
+        //    customerDtos.firstName = await AddCustomer.AddNewCustomer(firstName);
+        //}
     }
 }

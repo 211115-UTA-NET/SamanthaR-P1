@@ -19,19 +19,7 @@ namespace StoreApi.Controllers
             return statueDtos;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateInventoryAsync([FromQuery, Required] int quantity, [FromQuery, Required] int storeID, [FromQuery, Required] int itemID)
-        {
-            try
-            {
-                await UpdateInventoryAsync(quantity, storeID, itemID);
-                return StatusCode(200);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500);
-            }
-        }
+        
         
     }
 }

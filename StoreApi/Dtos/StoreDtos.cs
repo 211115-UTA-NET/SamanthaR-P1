@@ -5,10 +5,22 @@ namespace StoreApi.Dtos
     public class StoreDtos
     {
 
-        internal int storeID { get; set; }
+        public int StoreID { get; set; }
 
-        internal string? storeLocation { get; set; }
+        public string? StoreLocation { get; set; }
 
-        internal Dictionary<Statue, int> itemQuantity { get; set; } = new Dictionary<Statue, int>();
+        public StoreDtos()
+        {
+
+        }
+        public StoreDtos(int storeID, string storeLocation)
+        {
+            StoreID = storeID;
+            StoreLocation = storeLocation;
+        }
+
+       
+
+        //internal Dictionary<Statue, int> itemQuantity { get; set; } = new Dictionary<Statue, int>();
     }
 }

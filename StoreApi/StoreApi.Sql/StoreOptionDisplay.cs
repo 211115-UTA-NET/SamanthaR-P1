@@ -3,33 +3,31 @@ using System.Data.SqlClient;
 
 namespace StoreApi.Sql
 {
-    public static class StoreOptionDisplay
+    public class StoreOptionDisplay : IRepository
     {
-        public static List<StoreDtos> ReadStoreMenu()
+        public async Task<List<StoreDtos>> ReadStoreMenu()
         {
             string connectionString = File.ReadAllText("C:/Users/roder/Revature/BookDBConnectionString.txt");
             using SqlConnection connection = new(connectionString);
 
             List<StoreDtos> storeList = new List<StoreDtos>();
 
-            connection.Open();
+            await connection.OpenAsync();
 
             string displayStoresQuery = "SELECT * FROM Store";
 
             using SqlCommand displayStoreCommand = new(displayStoresQuery, connection);
             using SqlDataReader reader = displayStoreCommand.ExecuteReader();
-            while (reader.Read())
+            while (await reader.ReadAsync())
             {
-                StoreDtos storeDtos = new StoreDtos();
                 int storeID = reader.GetInt32(0); 
                 string storeLocation = reader.GetString(1);
-                storeDtos.storeID = storeID;
-                storeDtos.storeLocation = storeLocation;
+                StoreDtos storeDtos = new StoreDtos(storeID, storeLocation);
                 storeList.Add(storeDtos);
             }
 
 
-            connection.Close();
+            await connection.CloseAsync();
             return storeList;
 
         }

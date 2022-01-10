@@ -2,7 +2,7 @@
 using StoreApi.Logic;
 using System.Data.SqlClient;
 
-namespace StoreApi.StoreApi.Sql
+namespace StoreApi.Sql
 {
     public class UpdateQuantity
     {
