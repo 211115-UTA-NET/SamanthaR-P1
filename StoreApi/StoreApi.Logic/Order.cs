@@ -12,7 +12,6 @@ namespace StoreApi.Logic
         private Customer firstName;
         private Customer lastName;
         private DateTime orderedOn;
-        private Store storeLocation;
         private List<KeyValuePair<Statue, int>> item;
         public static int quantity { get; set; }
         public static Store? StoreLocation { get; set; }
@@ -23,7 +22,7 @@ namespace StoreApi.Logic
 
 
 
-        string commandText = $"INSERT INTO Orders (Customer_First_Name, Customer_Last_Name, Ordered_On) VALUES ({FirstName}, {LastName}, {Item});";
+        
     }
 
 

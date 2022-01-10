@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using static System.Console;
-using System.Xml.Serialization;
-using Prometheus;
+using StoreApi.Dtos;
 
 namespace StoreApi.Logic
 {
@@ -39,6 +38,15 @@ namespace StoreApi.Logic
             this.itemID = itemID;
             this.style = style;
             this.price = price;
+        }
+
+        public Statue(StatueDtos quantity, StoreDtos storeID, StatueDtos itemID)
+        {
+            StatueDtos statueDtos = new StatueDtos();
+            StoreDtos storeDtos = new StoreDtos();
+            statueDtos.quantity = quantity;
+            storeDtos.storeID = storeID;
+
         }
     }
 }
