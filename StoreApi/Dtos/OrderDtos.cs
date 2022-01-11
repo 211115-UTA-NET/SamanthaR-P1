@@ -4,6 +4,8 @@
     {
         public List<KeyValuePair<StatueDtos, int>> item;
         public int quantity { get; set; }
+        public int orderID { get; set; }
+        public string storeLocation { get; set; }
         public StoreDtos? storeID { get; set; }
         public DateTime orderedOn { get; set; }
         public CustomerDtos? customerName { get; set; }
