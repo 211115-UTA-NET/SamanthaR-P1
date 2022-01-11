@@ -32,8 +32,9 @@ namespace Project1
 
     class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
+            #region fields
             int userStatueSelection = 0;
             int userDesiredQuantity = 0;
             int[] allowedQuantity = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -47,7 +48,7 @@ namespace Project1
             int[] statueMenuOptions = { 1, 2, 3, 4, 5 };
             int storeID;
             string modifyInventoryCommand = "";
-
+            #endregion
             WriteLine("\n\nWelcome to the Garden Ceramics Store!\n");
             do
             {
@@ -57,6 +58,7 @@ namespace Project1
                 if (yesno == "y")
                 {
                     CustomerDtos customer = new CustomerDtos();
+                    CustomerHandler customerH = new CustomerHandler();
                     WriteLine("Please enter your first name.");
                     customer.firstName = ReadLine();
                     WriteLine("Please enter your last name");
@@ -67,8 +69,9 @@ namespace Project1
                     customer.city = ReadLine();
                     WriteLine("What is your state?");
                     customer.state = ReadLine();
-                    CustomerHandler customerHandler = new CustomerHandler();
-                    customerHandler.AddCustomers(customer.firstName, customer.lastName, customer.address, customer.city, customer.state);
+                    await customerH.AddCustomerAsync(customer);
+                    
+
                     WriteLine($"It's nice to meet you, {customer.firstName} {customer.lastName}!");
                     verifyCustomer = true;
                     
@@ -76,31 +79,25 @@ namespace Project1
                 }
                 else
                 {
-
+                    CustomerHandler customerH = new CustomerHandler();
+                    CustomerDtos customer = new CustomerDtos();
                     WriteLine("Let's look you up in our database. What is your first name?");
-                    string firstName = ReadLine();
+                    customer.firstName = ReadLine();
                     WriteLine("What is your last name?");
-                    string lastName = ReadLine();
-
-                    connection.Open();
+                    customer.lastName = ReadLine();
                     try
                     {
-                        string findUser = $"SELECT * FROM Garden_Customer WHERE Customer_First_Name = '{firstName}' AND Customer_Last_Name = '{lastName}';";
                         WriteLine("\nPrinting search results... \n\n-----------------------------------------------------------------------------");
-                        using SqlCommand findUserCommand = new(findUser, connection);
-                        using SqlDataReader reader2 = findUserCommand.ExecuteReader();
-                        reader2.Read();
-                        Write(reader2.GetString(1) + " " + reader2.GetString(2) + ", " + reader2.GetString(3) + ", " + reader2.GetString(4) + ", " + reader2.GetString(5));
-                        //                          connection.Close();
-                        WriteLine("\n----------------------------------------------------------------------------- \n\nIs this you? y/n");
-
-
+                        var custom = await customerH.CustomerLookupAsync(customer);
+                        string customerDisp = $"{custom.firstName} {custom.lastName} {custom.city} {custom.state}";
+                        WriteLine(customerDisp);
+                        WriteLine("----------------------------------------------------------------------------- \n\nIs this you? y/n");
 
                         string verifyCorrect = ReadLine();
                         yesno = verifyCorrect.ToLower();
                         if (yesno == "y")
                         {
-                            WriteLine($"Welcome back, {firstName}!");
+                            WriteLine($"Welcome back, {customer.firstName}!");
                             verifyCustomer = true;
                         }
                     }
@@ -112,23 +109,29 @@ namespace Project1
             } while (!verifyCustomer);
 
 
-            WriteLine("\nWhat store are you making your order from today? \nPlease select from the following:\nFor Seattle, enter 1 \nFor Portland, enter 2 \nFor Sacramento, enter 3");
 
-            connection.Close();
+            WriteLine("\nWhat store would you like to order from?");
+            StoreHandler storeHandler = new StoreHandler();
+            StoreDtos store = new StoreDtos();
+            //var sto = await storeHandler.DisplayStoreOptionsAsync(store);
+            //string storeDisplay = $"{sto.StoreID}";
+            WriteLine("\nPlease select from the following:\nFor Seattle, enter 1 \nFor Portland, enter 2 \nFor Sacramento, enter 3");
+
+
             do
             {
                 storeChoice = Convert.ToInt32(ReadLine());
                 if (storeChoice == 1)
                 {
-                    storeID = 80;
+                    store.StoreID = 80;
                 }
                 else if (storeChoice == 2)
                 {
-                    storeID = 81;
+                    store.StoreID = 81;
                 }
                 else if (storeChoice == 3)
                 {
-                    storeID = 82;
+                    store.StoreID = 82;
                 }
                 else
                 {
@@ -151,34 +154,14 @@ namespace Project1
                 }
             }
             while (storeChoice != 0);
-            connection.Open();
+
+            StatueHandler statueHandler = new StatueHandler();
+            StatueDtos statue = new StatueDtos();
+            var stat = await statueHandler.DisplayStatues(store.StoreID);
+            string statueDisplay = $"Enter: {statue.itemID}, to select {statue.style}\t${statue.price}";
+            WriteLine(statueDisplay);
+
             do
-            {
-                int item_ID;
-                string style = "";
-                decimal price;
-                string commandText = "SELECT * FROM Statue;";
-
-                //then insert those variables into the appropriate information by columns of the customer table
-
-                using SqlCommand command2 = new(commandText, connection);
-                //take this command and put it through this connection
-
-                using SqlDataReader reader = command2.ExecuteReader();
-
-                while (reader.Read()) //reads one row at a time, getting one value for each column, indexes at [0], you must know the type and the value that will come out of the database
-                {
-
-                    item_ID = reader.GetInt32(0);
-
-                    style = reader.GetString(1);
-
-                    price = reader.GetDecimal(2);
-
-                    Console.WriteLine($"Enter {item_ID} to select '{style}' for ${price}");
-                }
-                connection.Close();
-                do
                 {
                     userStatueSelection = Convert.ToInt32(ReadLine());
                     //decimal total = 0;
@@ -219,41 +202,17 @@ namespace Project1
                         continue;
                     }
                 }
-                connection.Open();
-                modifyInventoryCommand = $"UPDATE Statue_Store_Inventory SET Qty = Qty - {userDesiredQuantity} WHERE Store_ID = {storeID} AND Item_ID = {userStatueSelection}";
-                using SqlCommand command3 = new(modifyInventoryCommand, connection);
-                using SqlDataReader reader2 = command3.ExecuteReader();
-                WriteLine("Would you like to continue shopping? y/n");
-                toContinue = Console.ReadLine();
-                toContinue = toContinue.Trim();
-                toContinue = toContinue.ToLower();
-                if (toContinue == "y" || toContinue == "yes")
-                {
-                    keepShopping = true;
-                }
-                else
-                {
-                    keepShopping = false;
-                }
+            //StatueHandler statueHandler = new StatueHandler();
+            //StatueDtos statue = new StatueDtos();
+            await statueHandler.UpdateStoreQuantity(userDesiredQuantity, store.StoreID);
 
-            } while (keepShopping == true);
-            connection.Close();
-
-
-            //use a do-while loop -- so they can continue to shop if they want more itemsXXXXXXXXXX
-            //have a readline for the user's desired option and quantityXXXXXXXXXXXXXXX
-            //want to take in a user option and quantity and create a statement that can 1. connection.open(), 2. reduce the inventory at the selected store by their quantity choice, 3. connection.close() 
-            //total += qty*price
-            //} (while the user's input != 1,2,3,4,or5)
-            //
-            /* connection.Open;
-
-
-            Order thisOrder = new()
-            string commandText = "SELECT  FROM ;";
-
-            */
-
+            WriteLine("Thank you for your purchase. Please see your order history:");
+            CustomerHandler customerHandler = new CustomerHandler();
+            CustomerDtos customerDtos = new CustomerDtos();
+            OrderDtos order = new OrderDtos();
+            var cust = await customerHandler.CustomerOrderHistoryAsync(customerDtos);
+            string customerDisplay = $"{order.orderID} {order.storeID} {order.storeLocation}";
+            WriteLine(customerDisplay);
         }
     }
 }

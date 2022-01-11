@@ -20,7 +20,7 @@ namespace Project1
             Uri server = new("https://localhost:7125");
             _httpClient.BaseAddress = server;
             Dictionary<string, string> query = new() { ["storeID"] = storeID.ToString()};
-            string requestUri = QueryHelpers.AddQueryString("api/statue/itemMenu", query); //change the uri to be the name of the controller
+            string requestUri = QueryHelpers.AddQueryString("/api/statue/itemMenu", query); //change the uri to be the name of the controller
             HttpRequestMessage request = new(HttpMethod.Get, requestUri);
             request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));
             HttpResponseMessage response;
@@ -31,13 +31,13 @@ namespace Project1
 
             return requestedInfo;
         }
-        public async Task UpdateStoreQuantity(int storeID)
+        public async Task UpdateStoreQuantity(int statueQuantity, int storeID)
         {
             HttpClient _httpClient = new();
             Uri server = new("https://localhost:7125");
             _httpClient.BaseAddress = server;
-            Dictionary<string, string> query = new() { ["storeID"] = storeID.ToString() };
-            string requestUri = QueryHelpers.AddQueryString("api/statue/updateQuantity", query); //change the uri to be the name of the controller
+            Dictionary<string, string> query = new() { ["statueQuantity"] = statueQuantity.ToString(), ["storeID"] = storeID.ToString() };
+            string requestUri = QueryHelpers.AddQueryString("/api/statue/updateQuantity", query); //change the uri to be the name of the controller
             HttpRequestMessage request = new(HttpMethod.Post, requestUri);
             request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));
             HttpResponseMessage response;

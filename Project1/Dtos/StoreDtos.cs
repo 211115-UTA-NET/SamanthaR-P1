@@ -12,10 +12,8 @@ namespace Project1.Dtos
 
         public string? StoreLocation { get; set; }
 
-        public StoreDtos()
-        {
-
-        }
+        public StoreDtos() { }
+        
         public StoreDtos(int storeID, string storeLocation)
         {
             StoreID = storeID;

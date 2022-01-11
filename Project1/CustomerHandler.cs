@@ -17,13 +17,13 @@ namespace Project1
     /// </summary>
     public class CustomerHandler
     {
-        public async Task<CustomerDtos> CustomerLookup(string firstName, string lastName)
+        public async Task<CustomerDtos> CustomerLookupAsync(CustomerDtos customer)
         {
             HttpClient _httpClient = new();
             Uri server = new("https://localhost:7125");
             _httpClient.BaseAddress = server;
-            Dictionary<string, string> query = new() { ["firstName"] = firstName, ["lastName"] = lastName };
-            string requestUri = QueryHelpers.AddQueryString("api/customer/lookup", query); //change the uri to be the name of the controller
+            Dictionary<string, string> query = new() { ["firstName"] = customer.firstName, ["lastName"] = customer.lastName };
+            string requestUri = QueryHelpers.AddQueryString("/api/customer/lookup", query); //change the uri to be the name of the controller
             HttpRequestMessage request = new(HttpMethod.Get, requestUri);
             request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));
             HttpResponseMessage response;
@@ -31,17 +31,16 @@ namespace Project1
             response.EnsureSuccessStatusCode();
             CustomerDtos? requestedInfo = await response.Content.ReadFromJsonAsync<CustomerDtos>(); //can be a list, a customerDtos, whatever to call in for
 
-
             return requestedInfo;
         }
 
-        public async Task<List<OrderDtos>> CustomerOrderHistory(string firstName, string lastName)
+        public async Task<List<OrderDtos>> CustomerOrderHistoryAsync(CustomerDtos customer)
         {
             HttpClient _httpClient = new();
             Uri server = new("https://localhost:7125");
             _httpClient.BaseAddress = server;
-            Dictionary<string, string> query = new() { ["firstName"] = firstName, ["lastName"] = lastName };
-            string requestUri = QueryHelpers.AddQueryString("api/customer/history", query); //change the uri to be the name of the controller
+            Dictionary<string, string> query = new() { ["firstName"] = customer.firstName, ["lastName"] = customer.lastName };
+            string requestUri = QueryHelpers.AddQueryString("/api/customer/history", query); //change the uri to be the name of the controller
             HttpRequestMessage request = new(HttpMethod.Get, requestUri);
             request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));
             HttpResponseMessage response;
@@ -51,13 +50,13 @@ namespace Project1
 
             return requestedInfo;
         }
-        public async Task AddCustomers(string firstName, string lastName, string address, string city, string state)
+        public async Task AddCustomerAsync(CustomerDtos customer)
         {
             HttpClient _httpClient = new();
             Uri server = new("https://localhost:7125");
             _httpClient.BaseAddress = server;
-            Dictionary<string, string> query = new() { ["firstName"] = firstName, ["lastName"] = lastName, ["address"] = address, ["city"] = city, ["state"] = state };
-            string requestUri = QueryHelpers.AddQueryString("api/customer/add", query); //change the uri to be the name of the controller
+            Dictionary<string, string> query = new() { ["firstName"] = customer.firstName, ["lastName"] = customer.lastName, ["address"] = customer.address, ["city"] = customer.city, ["state"] = customer.state };
+            string requestUri = QueryHelpers.AddQueryString("/api/customer/add", query); //change the uri to be the name of the controller
             HttpRequestMessage request = new(HttpMethod.Post, requestUri);
             request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));
             HttpResponseMessage response;

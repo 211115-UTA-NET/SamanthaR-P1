@@ -12,12 +12,12 @@ namespace Project1.StoreServices
 {
     public static class LoadService
     {
-        public static async Task<CustomerDtos> CustomerLoadServiceAsync(string firstName, string lastName)
+        public static async Task<CustomerDtos> CustomerLoadServiceAsync(CustomerDtos customer)
         {
             HttpClient _httpClient = new();
             Uri server = new("https://localhost:7125");
             _httpClient.BaseAddress = server;
-            Dictionary<string, string> query = new() { ["firstName"] = firstName, ["lastName"] = lastName };
+            Dictionary<string, string> query = new() { ["firstName"] = customer.firstName, ["lastName"] = customer.lastName };
             string requestUri = QueryHelpers.AddQueryString("/api/customer", query);
             HttpRequestMessage request = new(HttpMethod.Get, requestUri);
             request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));

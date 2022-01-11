@@ -8,6 +8,7 @@
         public int itemID { get; set; }
         public int storeID { get; set; }
         public string style { get; set; }
+        public string storeLocation { get; set; }
 
         public DateTime orderedOn { get; set; }
         public int customerID { get; set; }

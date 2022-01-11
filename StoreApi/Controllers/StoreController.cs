@@ -22,7 +22,7 @@ namespace StoreApi.Controllers
             return storeDtosList.ToList();
         }
 
-        [HttpPost]
+        [HttpPost("inventory")]
         public async Task<IActionResult> UpdateInventoryAsync([FromQuery, Required] int quantity, [FromQuery, Required] int storeID, [FromQuery, Required] int itemID)
         {
             try
@@ -40,7 +40,7 @@ namespace StoreApi.Controllers
             return StatusCode(200);
         }
 
-        [HttpPost]
+        [HttpPost("history")]
         public async Task<IActionResult> UpdateStoreHistory([FromQuery, Required] int customerID, [FromQuery, Required] int storeID, [FromQuery, Required] int itemID, [FromQuery] string style,[FromQuery] DateTime dateTime)
         {
             ///<remarks>

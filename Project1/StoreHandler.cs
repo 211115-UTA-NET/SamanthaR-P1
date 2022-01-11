@@ -14,7 +14,7 @@ namespace Project1
 {
     public class StoreHandler
     {
-        public async Task<List<StoreDtos>> DisplayStoreOptions()
+        public async Task<List<StoreDtos>> DisplayStoreOptionsAsync(StoreDtos store)
         {
             HttpClient _httpClient = new();
             Uri server = new("https://localhost:7125");

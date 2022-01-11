@@ -22,8 +22,9 @@ namespace StoreApi.Controllers
         [HttpGet("history")]
         public ActionResult<List<OrderDtos>> CustomerOrderHistory([FromQuery, Required] string firstName, [FromQuery, Required] string lastName)
         {
+            CustomerDtos customerDtos = new CustomerDtos();
             List<OrderDtos> orderDtos;
-            orderDtos = DisplayCustomerOrderHistory.ReadOrderHistory(firstName, lastName);
+            orderDtos = DisplayCustomerOrderHistory.ReadOrderHistory(customerDtos);
             return orderDtos;
         }
 
