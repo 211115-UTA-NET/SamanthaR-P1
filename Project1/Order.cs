@@ -9,7 +9,7 @@ using static System.Console;
 
 namespace Project1
 {
-    class Order
+    public class Order
     {
         //Fields - details about the order
         private List<KeyValuePair<Statue, int>> item;

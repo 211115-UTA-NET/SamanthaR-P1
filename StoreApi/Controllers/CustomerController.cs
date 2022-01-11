@@ -11,7 +11,7 @@ namespace StoreApi.Controllers
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("lookup")] //specifies the path the handler takes to reach this method
         public ActionResult<CustomerDtos> CustomerLookUp([FromQuery, Required]string firstName, [FromQuery, Required] string lastName)
         {
             CustomerDtos customerDtos;
@@ -19,7 +19,7 @@ namespace StoreApi.Controllers
             return customerDtos;
         }
 
-        [HttpGet]
+        [HttpGet("history")]
         public ActionResult<List<OrderDtos>> CustomerOrderHistory([FromQuery, Required] string firstName, [FromQuery, Required] string lastName)
         {
             List<OrderDtos> orderDtos;
@@ -27,7 +27,7 @@ namespace StoreApi.Controllers
             return orderDtos;
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> AddCustomers([FromQuery, Required] string firstName, [FromQuery, Required] string lastName, [FromQuery, Required] string address, [FromQuery, Required] string city, [FromQuery, Required] string state)
         {
             CustomerDtos customerDtos = new CustomerDtos();

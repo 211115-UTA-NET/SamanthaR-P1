@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.AspNetCore.Mvc;
 using Project1.Dtos;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,7 @@ namespace Project1
             Uri server = new("https://localhost:7125");
             _httpClient.BaseAddress = server;
             Dictionary<string, string> query = new() { ["firstName"] = firstName, ["lastName"] = lastName };
-            string requestUri = QueryHelpers.AddQueryString("api/customer", query); //change the uri to be the name of the controller
+            string requestUri = QueryHelpers.AddQueryString("api/customer/lookup", query); //change the uri to be the name of the controller
             HttpRequestMessage request = new(HttpMethod.Get, requestUri);
             request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));
             HttpResponseMessage response;
@@ -31,6 +33,39 @@ namespace Project1
 
 
             return requestedInfo;
+        }
+
+        public async Task<List<OrderDtos>> CustomerOrderHistory(string firstName, string lastName)
+        {
+            HttpClient _httpClient = new();
+            Uri server = new("https://localhost:7125");
+            _httpClient.BaseAddress = server;
+            Dictionary<string, string> query = new() { ["firstName"] = firstName, ["lastName"] = lastName };
+            string requestUri = QueryHelpers.AddQueryString("api/customer/history", query); //change the uri to be the name of the controller
+            HttpRequestMessage request = new(HttpMethod.Get, requestUri);
+            request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));
+            HttpResponseMessage response;
+            response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            List<OrderDtos>? requestedInfo = await response.Content.ReadFromJsonAsync<List<OrderDtos>>(); //can be a list, a customerDtos, whatever to call in for
+
+            return requestedInfo;
+        }
+        public async Task AddCustomers(string firstName, string lastName, string address, string city, string state)
+        {
+            HttpClient _httpClient = new();
+            Uri server = new("https://localhost:7125");
+            _httpClient.BaseAddress = server;
+            Dictionary<string, string> query = new() { ["firstName"] = firstName, ["lastName"] = lastName, ["address"] = address, ["city"] = city, ["state"] = state };
+            string requestUri = QueryHelpers.AddQueryString("api/customer/add", query); //change the uri to be the name of the controller
+            HttpRequestMessage request = new(HttpMethod.Post, requestUri);
+            request.Headers.Accept.Add(new(MediaTypeNames.Application.Json));
+            HttpResponseMessage response;
+            response = await _httpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            await response.Content.ReadFromJsonAsync<Task>(); //can be a list, a customerDtos, whatever to call in for
+
+            ///<remarks>no return type needed, we are not saving this information on the client side - nothing hard-coded</remarks>
         }
     }
 }

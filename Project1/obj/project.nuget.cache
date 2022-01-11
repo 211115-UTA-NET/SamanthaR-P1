@@ -1,9 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "4dpTrAtwmkL4KHCzk7Na/2+L0H/K4xfrc7d5Cr+TobocrqKofZTTTx7s3qfqCKz1LW5ISq2n86ACJUwQXtoKxQ==",
+  "dgSpecHash": "penxLU27980pksVcDNQ1unDUzD6pREshL8Y7BVvUlFSa/3AhEBVJSzucoV9umhHvD+KBSyoo3OEtSwYqonJ12A==",
   "success": true,
   "projectFilePath": "C:\\Users\\roder\\Revature\\SamanthaR-P1\\Project1\\Project1.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\roder\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\roder\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+    "C:\\Users\\roder\\.nuget\\packages\\microsoft.aspnetcore.mvc.abstractions\\2.2.0\\microsoft.aspnetcore.mvc.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\roder\\.nuget\\packages\\microsoft.aspnetcore.routing.abstractions\\2.2.0\\microsoft.aspnetcore.routing.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\roder\\.nuget\\packages\\microsoft.aspnetcore.webutilities\\2.2.0\\microsoft.aspnetcore.webutilities.2.2.0.nupkg.sha512",
     "C:\\Users\\roder\\.nuget\\packages\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",
     "C:\\Users\\roder\\.nuget\\packages\\microsoft.extensions.primitives\\2.2.0\\microsoft.extensions.primitives.2.2.0.nupkg.sha512",

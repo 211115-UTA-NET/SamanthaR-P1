@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project1.Dtos
 {
-    internal class OrderDtos
+    public class OrderDtos
     {
         public List<KeyValuePair<StatueDtos, int>> item;
         public int quantity { get; set; }
