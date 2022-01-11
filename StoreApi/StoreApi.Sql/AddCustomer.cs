@@ -4,21 +4,21 @@ using StoreApi.Logic;
 
 namespace StoreApi.Sql
 {
-    public static class AddCustomer
+    public class AddCustomer
     {
-        public static CustomerDtos AddNewCustomer(CustomerDtos customer)
+        public async Task<CustomerDtos> AddNewCustomer(CustomerDtos customer)
         {
             string connectionString = File.ReadAllText("C:/Users/roder/Revature/BookDBConnectionString.txt");
             using SqlConnection connection = new(connectionString);
             
-            connection.Open();
+            await connection.OpenAsync();
             
             string newUser = $"INSERT INTO Garden_Customer (Customer_First_Name, Customer_Last_Name, Shipping_Address, Shipping_City, Shipping_State) VALUES ('{customer.firstName}', '{customer.lastName}', '{customer.address}', '{customer.city}', '{customer.state}');";
 
             using SqlCommand newUserCommand = new(newUser, connection);
             using SqlDataReader reader = newUserCommand.ExecuteReader();
 
-            connection.Close();
+            await connection.CloseAsync();
 
             return customer;
         }

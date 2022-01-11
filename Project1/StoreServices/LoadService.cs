@@ -6,7 +6,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using Project1.Dtos;
-
+using System.Net.Http.Json;
 
 namespace Project1.StoreServices
 {

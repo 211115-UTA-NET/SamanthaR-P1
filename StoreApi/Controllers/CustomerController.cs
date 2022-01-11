@@ -8,7 +8,7 @@ using StoreApi.Logic;
 namespace StoreApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CustomerController : ControllerBase
     {
         [HttpGet]
@@ -19,11 +19,18 @@ namespace StoreApi.Controllers
             return customerDtos;
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddCustomers([FromQuery, Required] string firstName, [FromQuery, Required] string lastName, [FromQuery, Required] string address, [FromQuery, Required] string city, [FromQuery, Required] string state)
-        //{
-        //    CustomerDtos customerDtos;
-        //    customerDtos.firstName = await AddCustomer.AddNewCustomer(firstName);
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AddCustomers([FromQuery, Required] string firstName, [FromQuery, Required] string lastName, [FromQuery, Required] string address, [FromQuery, Required] string city, [FromQuery, Required] string state)
+        {
+            CustomerDtos customerDtos = new CustomerDtos();
+            customerDtos.firstName = firstName;
+            customerDtos.lastName = lastName;
+            customerDtos.address = address;
+            customerDtos.city = city;
+            customerDtos.state = state;
+            AddCustomer newCustomer = new AddCustomer();
+            customerDtos = await newCustomer.AddNewCustomer(customerDtos);
+            return StatusCode(200);
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Project1.Dtos
     {
         public List<KeyValuePair<Statue, int>> item;
         public int quantity { get; set; }
-        public Store? storeLocation { get; set; }
+        public StoreDtos? storeLocation { get; set; }
         public DateTime orderedOn { get; set; }
         public Customer? customerName { get; set; }
     }

@@ -7,7 +7,7 @@ using StoreApi.Sql;
 namespace StoreApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class StoreController : ControllerBase
     {
         private readonly IRepository _repository;
@@ -23,22 +23,20 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateInventoryAsync([FromQuery, Required] List<StatueDtos> statueDtos, [FromQuery, Required] int storeID)
+        public async Task<IActionResult> UpdateInventoryAsync([FromQuery, Required] int quantity, [FromQuery, Required] int storeID, [FromQuery, Required] int itemID)
         {
-            for(int i = 0; i < statueDtos.Count; i++)
+            try
             {
-
-                try
-                {
-                   UpdateQuantity.UpdateItemQuantity(statueDtos[i].quantity, storeID, statueDtos[i].itemID);
+                UpdateQuantity update = new UpdateQuantity();
+                await update.UpdateItemQuantity(quantity, storeID, itemID);
                     
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Server Error");
-                    return StatusCode(500);
-                }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Server Error");
+                return StatusCode(500);
             }
+            
             return StatusCode(200);
         }
     }

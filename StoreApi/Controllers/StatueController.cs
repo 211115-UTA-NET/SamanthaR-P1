@@ -8,7 +8,7 @@ using StoreApi.Logic;
 namespace StoreApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class StatueController : ControllerBase
     {
         [HttpGet]
@@ -19,8 +19,20 @@ namespace StoreApi.Controllers
             return statueDtos;
         }
 
-        
-        
+        [HttpPost]
+        public async Task<IActionResult> UpdateStoreQuantity([FromQuery, Required] int statueQuantity, [FromQuery, Required] int storeID, [FromQuery, Required] int itemID)
+        {
+            StatueDtos statueDtos = new StatueDtos();
+            statueDtos.quantity = statueQuantity;
+            statueDtos.itemID = itemID;
+            StoreDtos storeDtos = new StoreDtos();
+            storeDtos.StoreID = storeID;
+            
+            UpdateQuantity updateQuantity = new UpdateQuantity();
+            await updateQuantity.UpdateItemQuantity(statueQuantity, storeID, itemID);
+            return StatusCode(200);
+        }
+
     }
 }
 

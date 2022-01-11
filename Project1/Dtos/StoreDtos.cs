@@ -6,12 +6,20 @@ using System.Threading.Tasks;
 
 namespace Project1.Dtos
 {
-    internal class StoreDtos
+    public class StoreDtos
     {
-        private int storeID;
+        public int StoreID { get; set; }
 
-        private string? storeLocation;
+        public string? StoreLocation { get; set; }
 
-        private Dictionary<Statue, int> itemQuantity = new();
+        public StoreDtos()
+        {
+
+        }
+        public StoreDtos(int storeID, string storeLocation)
+        {
+            StoreID = storeID;
+            StoreLocation = storeLocation;
+        }
     }
 }

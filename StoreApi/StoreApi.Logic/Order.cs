@@ -14,10 +14,10 @@ namespace StoreApi.Logic
         private DateTime orderedOn;
         private List<KeyValuePair<Statue, int>> item;
         public static int quantity { get; set; }
-        public static Store? StoreLocation { get; set; }
+        public static Store StoreLocation { get; set; }
         public static DateTime OrderedOn { get; set; }
-        public static Customer? FirstName { get; set; }
-        public static Customer? LastName { get; set; }
+        public static Customer FirstName { get; set; }
+        public static Customer LastName { get; set; }
         public static List<KeyValuePair<Statue, int>> Item { get; set; }
 
 
