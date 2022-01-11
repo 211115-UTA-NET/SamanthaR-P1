@@ -39,5 +39,16 @@ namespace StoreApi.Controllers
             
             return StatusCode(200);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStoreHistory([FromQuery, Required] int customerID, [FromQuery, Required] int storeID, [FromQuery, Required] int itemID, [FromQuery] string style,[FromQuery] DateTime dateTime)
+        {
+            ///<remarks>
+            ///Read in all of the information from the OrderDtos class, but you don't have to instantiate one unless the function is looking for a Dtos class object. In this case, we don't need to instantiate an object becasue the AddNewOrder() is only looking for numbers and a string and not for a Dtos object. Also, returning an object is pointless, since the task is void and returns nothing
+            /// </remarks>
+            UpdateStoreOrderHistory newOrderHistory = new UpdateStoreOrderHistory();
+            await newOrderHistory.AddNewOrder(customerID, storeID, itemID, style, dateTime);
+            return StatusCode(200);
+        }
     }
 }

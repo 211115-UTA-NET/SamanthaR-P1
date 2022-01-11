@@ -17,6 +17,11 @@ newCustomer.state = "Oregon";
 await CustomerPostServiceAsync.PostNewCustomerServiceAsync(newCustomer);
 
 
+///<summary>
+///everything in the console side is doing the opposite of the controller side
+///also, every method in a controller needs to have a paired method on the console side that's the opposite of the controller
+/// </summary>
+
 
 
 

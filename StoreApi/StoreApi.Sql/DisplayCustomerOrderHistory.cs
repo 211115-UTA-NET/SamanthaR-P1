@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using StoreApi.Logic;
 
-namespace StoreApi.StoreApi.Sql
+namespace StoreApi.Sql
 {
     public class DisplayCustomerOrderHistory
     {

@@ -19,6 +19,14 @@ namespace StoreApi.Controllers
             return customerDtos;
         }
 
+        [HttpGet]
+        public ActionResult<List<OrderDtos>> CustomerOrderHistory([FromQuery, Required] string firstName, [FromQuery, Required] string lastName)
+        {
+            List<OrderDtos> orderDtos;
+            orderDtos = DisplayCustomerOrderHistory.ReadOrderHistory(firstName, lastName);
+            return orderDtos;
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddCustomers([FromQuery, Required] string firstName, [FromQuery, Required] string lastName, [FromQuery, Required] string address, [FromQuery, Required] string city, [FromQuery, Required] string state)
         {
