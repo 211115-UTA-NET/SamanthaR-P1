@@ -15,7 +15,7 @@ namespace StoreApi.Controllers
         {
             _repository = repository;
         }
-        [HttpGet]
+        [HttpGet("displayStores")]
         public async Task<List<StoreDtos>> DisplayStoreOptions()
         {
             IEnumerable<StoreDtos> storeDtosList = await _repository.ReadStoreMenu();

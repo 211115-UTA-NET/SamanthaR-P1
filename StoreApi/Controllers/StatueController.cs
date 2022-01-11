@@ -11,7 +11,7 @@ namespace StoreApi.Controllers
     [Route("api/[controller]")]
     public class StatueController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("itemMenu")]
         public ActionResult<List<StatueDtos>> DisplayStatues([FromQuery, Required] int storeID)
         {
             List<StatueDtos> statueDtos;
@@ -19,7 +19,7 @@ namespace StoreApi.Controllers
             return statueDtos;
         }
 
-        [HttpPost]
+        [HttpPost("updateQuantity")]
         public async Task<IActionResult> UpdateStoreQuantity([FromQuery, Required] int statueQuantity, [FromQuery, Required] int storeID, [FromQuery, Required] int itemID)
         {
             StatueDtos statueDtos = new StatueDtos();
